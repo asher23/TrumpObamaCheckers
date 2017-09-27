@@ -1,13 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Square from './Square';
-import { canMoveKnight, moveKnight } from './Game';
+import { canMovePiece, moveKnight, moveObama } from './Game';
 import { ItemTypes } from './Constants';
 import { DropTarget } from 'react-dnd';
 
 const squareTarget = {
-  drop(props) {
-    moveKnight(props.x, props.y);
+  canDrop(props, monitor) {
+    var id = monitor.getItem().knightId    
+    if (canMovePiece(props.x, props.y, id)) {
+      return true
+    } else {
+      return false
+    }
+  },
+  drop(props, monitor) {
+    console.log(props)
+    if (monitor.getItem().type === 'trump') {
+        var id = monitor.getItem().knightId
+        moveKnight(props.x, props.y, id)
+    } else {
+        var id = monitor.getItem().obamaId
+        moveObama(props.x, props.y, id)
+    }
   }
 };
 
@@ -56,4 +71,4 @@ BoardSquare.propTypes = {
   isOver: PropTypes.bool.isRequired
 };
 
-export default DropTarget(ItemTypes.KNIGHT, squareTarget, collect)(BoardSquare);
+export default DropTarget([ItemTypes.OBAMA, ItemTypes.KNIGHT], squareTarget, collect)(BoardSquare);

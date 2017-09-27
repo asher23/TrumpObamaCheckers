@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 export default class Square extends Component {
   render() {
     const { black } = this.props;
-    const fill = black ? 'red' : 'blue';
-    const stroke = black ? 'blue' : 'red';
+    const fill = black ? '#fdae01' : 'black';
+    const stroke = black ? 'black' : ' #fdae01';
 
     return (
       <div style={{

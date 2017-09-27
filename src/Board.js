@@ -4,6 +4,7 @@ import BoardSquare from './BoardSquare';
 import Knight from './Knight';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
+import Obama from './Obama';
 
 
 
@@ -23,13 +24,22 @@ class Board extends Component {
       }
       
       renderPiece(x, y) {
-        const [knightX, knightY] = this.props.knightPosition;
-        if (x === knightX && y === knightY) {
-          return <Knight />;
+        for (var i = 0; i <this.props.allknightpositions.length; i++) {
+            const [knightX, knightY, knightId] = this.props.allknightpositions[i];
+            if (x=== knightX && y === knightY) {
+                return <Knight id={knightId}/>
+            }          
+        }
+        for (var i = 0; i <this.props.allobamapositions.length; i++) {
+            const [obamaX, obamaY, obamaId] = this.props.allobamapositions[i];
+            if (x=== obamaX && y === obamaY) {
+                return <Obama id={obamaId}/>
+            }          
         }
       }
 
   render() {
+    
     const squares = [];
     for (let i = 0; i < 64; i++) {
       squares.push(this.renderSquare(i));
@@ -48,10 +58,10 @@ class Board extends Component {
   }
 }
 
-Board.propTypes = {
-  knightPosition: PropTypes.arrayOf(
-    PropTypes.number.isRequired
-  ).isRequired
-};
+// Board.propTypes = {
+//   knightPosition: PropTypes.arrayOf(
+//     PropTypes.number.isRequired
+//   ).isRequired
+// };
 
 export default DragDropContext(HTML5Backend)(Board);
